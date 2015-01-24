@@ -96,12 +96,7 @@ public class PPLevel {
     JSONArray jsonNodes = json.getJSONArray("nodes");
     for(int i = 0; i < jsonNodes.length(); ++i) {
       JSONObject node = jsonNodes.getJSONObject(i);
-      if(node.getString("type").equals("NodeBin")) {
-        nodes.add(new NodeBin().readFromJSON(node));
-      }
-      else if(node.getString("type").equals("NodeConveyorNormal")) {
-        nodes.add(new NodeConveyorNormal().readFromJSON(node));
-      }
+      nodes.add(createNode(node));
     }
 
     //load the mail
@@ -184,6 +179,19 @@ public class PPLevel {
     //otherwise, piggyback off of the save function
     this.save(parent);
 
+  }
+
+  public static Node createNode(JSONObject node) {
+    if(node.getString("type").equals("NodeBin")) {
+      return new NodeBin().readFromJSON(node);
+    }
+    else if(node.getString("type").equals("NodeConveyorNormal")) {
+      return new NodeConveyorNormal().readFromJSON(node);
+    }
+    else if(node.getString("type").equals("NodeGroupRect")) {
+      return new NodeGroupRect().readFromJSON(node);
+    }
+    else return null;
   }
 
 }

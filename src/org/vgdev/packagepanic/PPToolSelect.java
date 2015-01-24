@@ -38,6 +38,7 @@ public class PPToolSelect extends JToolBar implements ActionListener, MouseListe
     this.addTool("ToolNodeDelete", new ToolNodeDelete());
     this.addTool("ToolMailDelete", new ToolMailDelete());
     this.addTool("ToolNodeConveyorNormal", new NodeConveyorNormal());
+    this.addTool("ToolNodeGroupRect", new NodeGroupRect());
     this.addTool("ToolNodeBin", new NodeBin());
     this.addTool("ToolMailNormal", new MailNormal());
 
