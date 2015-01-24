@@ -1,0 +1,30 @@
+<project name="PackagePanicEditor">
+ 
+  <property name="source.dir"  value="src"/>
+  <property name="class.dir"   value="bin"/>
+  <property name="include.dir" value="inc"/>
+  <property name="jar.dir"     value="jar"/>
+  <property name="main-class"  value="org.vgdev.packagepanic.Main"/>
+ 
+  <target name="clean">
+    <delete dir="${class.dir}"/>
+    <delete dir="${jar.dir}"/>
+  </target>
+ 
+  <target name="build">
+    <mkdir dir="${class.dir}"/>
+    <javac srcdir="${source.dir}" destdir="${class.dir}"/>
+    <mkdir dir="${jar.dir}"/>
+    <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${class.dir}">
+      <fileset dir="${include.dir}"/>
+      <manifest>
+        <attribute name="Main-Class" value="${main-class}"/>
+      </manifest>
+    </jar>
+  </target>
+ 
+  <target name="run" depends="build">
+     <java jar="${jar.dir}/${ant.project.name}.jar" fork="true"/>
+  </target>
+ 
+</project>
