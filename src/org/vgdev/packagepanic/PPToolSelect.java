@@ -67,8 +67,10 @@ public class PPToolSelect extends JToolBar implements ActionListener, MouseListe
 
   @Override
   public void mouseClicked(MouseEvent event) {
-    currentTool.onClick(frame,level,event.getX()/PP.SZ,event.getY()/PP.SZ);
-    frame.repaint();
+    if(currentTool != null) {
+      currentTool.onClick(frame,level,event.getX()/PP.SZ,event.getY()/PP.SZ);
+      frame.repaint();
+    }
   }
 
   @Override public void mouseEntered(MouseEvent event) {}

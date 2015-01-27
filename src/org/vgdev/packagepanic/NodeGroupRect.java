@@ -49,26 +49,26 @@ public class NodeGroupRect extends NodeGroup implements Tool, Configurable {
     json.put("type","NodeGroupRect");
     json.remove("x");
     json.remove("y");
-    json.put("x1",x);
-    json.put("y1",y);
-    json.put("x2",x2);
-    json.put("y2",y2);
+    json.put("x1",y);
+    json.put("y1",x);
+    json.put("x2",y2);
+    json.put("y2",x2);
   }
 
   @Override
   public Node readFromJSON(JSONObject json) {
-    this.x = json.getInt("x1");
-    this.y = json.getInt("y1");
-    this.x2 = json.getInt("x2");
-    this.y2 = json.getInt("y2");
+    this.y = json.getInt("x1");
+    this.x = json.getInt("y1");
+    this.y2 = json.getInt("x2");
+    this.x2 = json.getInt("y2");
     json.put("type",json.getString("subtype"));
     json.remove("subtype");
     json.remove("x1");
     json.remove("y1");
     json.remove("x2");
     json.remove("y2");
-    json.put("x",x);
-    json.put("y",y);
+    json.put("x",y);
+    json.put("y",x);
     proto = PPLevel.createNode(json);
     return this;
   }

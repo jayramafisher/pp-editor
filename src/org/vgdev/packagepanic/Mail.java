@@ -11,14 +11,14 @@ public abstract class Mail {
   public abstract void paint(Graphics2D g);
 
   public Mail readFromJSON(JSONObject json) {
-    x = json.optInt("x",0);
-    y = json.optInt("y",0);
+    y = json.optInt("x",0);
+    x = json.optInt("y",0);
     return this;
   }
 
   public void writeToJSON(JSONObject json) {
-    json.put("x",x);
-    json.put("y",y);
+    json.put("x",y);
+    json.put("y",x);
   }
 
   public int getX() {
