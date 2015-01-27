@@ -24,7 +24,7 @@ public class ToolNodeDelete implements Tool {
   @Override
   public void onClick(Main frame, PPLevel level, int x, int y) {
     for(Node node : level.nodes) {
-      if(node.getX() == x && node.getY() == y) {
+      if(node.getX() == x && node.getY() == y || node instanceof NodeGroup && ((NodeGroup)node).containsTile(x,y)) {
         level.nodes.remove(node);
         return;
       }

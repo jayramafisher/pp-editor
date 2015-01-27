@@ -25,7 +25,7 @@ public class ToolNodeSelect implements Tool {
     Component cmp = ((BorderLayout)frame.getContentPane().getLayout()).getLayoutComponent(BorderLayout.EAST);
     if(cmp != null) frame.getContentPane().remove(cmp);
     for(Node node : level.nodes) {
-      if(node.getX() == x && node.getY() == y) {
+      if(node.getX() == x && node.getY() == y || node instanceof NodeGroup && ((NodeGroup)node).containsTile(x,y)) {
         if(node instanceof Configurable) {
           Configurable conf = (Configurable)node;
           frame.getContentPane().add(conf.createControls(),BorderLayout.EAST);

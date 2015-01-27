@@ -9,7 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import org.json.JSONObject;
 
-public class NodeGroupRect extends Node implements Tool, Configurable {
+public class NodeGroupRect extends NodeGroup implements Tool, Configurable {
 
   int x2, y2;
   Node proto;
@@ -71,6 +71,11 @@ public class NodeGroupRect extends Node implements Tool, Configurable {
     json.put("y",y);
     proto = PPLevel.createNode(json);
     return this;
+  }
+
+  @Override
+  public boolean containsTile(int x, int y) {
+    return this.x <= x && x <= this.x2 && this.y <= y && y <= this.y2;
   }
 
   //Tool methods
