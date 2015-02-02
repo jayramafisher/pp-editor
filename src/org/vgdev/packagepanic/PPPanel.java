@@ -25,7 +25,7 @@ public class PPPanel extends JPanel {
     this.level = level;
 
     //set the GUI element size
-    this.setPreferredSize(new Dimension(PP.NY*PP.SZ,PP.NX*PP.SZ));
+    this.setPreferredSize(new Dimension(PP.NX*PP.SZ,PP.NY*PP.SZ));
 
     //load the image displaying an empty node
     Toolkit tk = Toolkit.getDefaultToolkit();
@@ -38,7 +38,7 @@ public class PPPanel extends JPanel {
 
     //draw the background, i.e. empty nodes
     for(int i = 0; i < PP.NX*PP.NY; ++i) {
-      g.drawImage(imgBlank,(i%PP.NY)*PP.SZ,(i/PP.NY)*PP.SZ,null);
+      g.drawImage(imgBlank,(i%PP.NX)*PP.SZ,(i/PP.NX)*PP.SZ,null);
     }
 
     //if the level isn't ready, don't draw it

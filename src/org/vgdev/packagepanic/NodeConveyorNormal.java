@@ -2,13 +2,22 @@ package org.vgdev.packagepanic;
 
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
+import java.awt.Container;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JPanel;
 import org.json.JSONObject;
 
-public class NodeConveyorNormal extends NodeConveyor implements Tool {
+public class NodeConveyorNormal extends NodeConveyor implements Tool, Configurable, ActionListener, ItemListener {
 
   //an image displaying the node
   private static Image img;
@@ -43,6 +52,35 @@ public class NodeConveyorNormal extends NodeConveyor implements Tool {
   public void writeToJSON(JSONObject json) {
     super.writeToJSON(json);
     json.put("type","NodeConveyorNormal");
+  }
+
+  @Override
+  public JPanel createControls() {
+    JPanel panel = new JPanel();
+    panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
+    String[] labels = new String[]{"right","up","left","down"};
+    JComboBox box = new JComboBox(labels);
+    box.setSelectedIndex(dir);
+    box.addActionListener(this);
+    panel.add(box);
+    JCheckBox check = new JCheckBox("Clickable");
+    check.addItemListener(this);
+    panel.add(check);
+    return panel;
+  }
+
+  @Override
+  public void actionPerformed(ActionEvent e) {
+    JComboBox box = (JComboBox)e.getSource();
+    dir = strToDir((String)box.getSelectedItem());
+    Container c = box.getParent();
+    while(c.getParent() != null) c = c.getParent();
+    c.repaint();
+  }
+
+  @Override
+  public void itemStateChanged(ItemEvent e) {
+    clickable = (e.getStateChange() == ItemEvent.SELECTED);
   }
 
   //Tool methods

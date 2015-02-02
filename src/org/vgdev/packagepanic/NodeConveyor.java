@@ -8,7 +8,7 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import org.json.JSONObject;
 
-public abstract class NodeConveyor extends Node implements Configurable, ActionListener {
+public abstract class NodeConveyor extends Node {
 
   //node facing directions
   protected static final int RIGHT = 0;
@@ -41,18 +41,7 @@ public abstract class NodeConveyor extends Node implements Configurable, ActionL
     );
   }
 
-  @Override
-  public JPanel createControls() {
-    JPanel panel = new JPanel();
-    String[] labels = new String[]{"right","up","left","down"};
-    JComboBox box = new JComboBox(labels);
-    box.setSelectedIndex(dir);
-    box.addActionListener(this);
-    panel.add(box);
-    return panel;
-  }
-
-  private String dirToStr(int dir) {
+  protected String dirToStr(int dir) {
     if(dir == RIGHT) return "right";
     if(dir == LEFT) return "left";
     if(dir == DOWN) return "down";
@@ -60,21 +49,12 @@ public abstract class NodeConveyor extends Node implements Configurable, ActionL
     return "null";
   }
 
-  private int strToDir(String str) {
+  protected int strToDir(String str) {
     if(str.equals("right")) return RIGHT;
     if(str.equals("left")) return LEFT;
     if(str.equals("down")) return DOWN;
     if(str.equals("up")) return UP;
     return -1;
-  }
-
-  @Override
-  public void actionPerformed(ActionEvent e) {
-    JComboBox box = (JComboBox)e.getSource();
-    dir = strToDir((String)box.getSelectedItem());
-    Container c = box.getParent();
-    while(c.getParent() != null) c = c.getParent();
-    c.repaint();
   }
 
 }
