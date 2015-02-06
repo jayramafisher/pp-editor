@@ -17,20 +17,20 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import org.json.JSONObject;
 
-public class NodeConveyorNormal extends NodeConveyor implements Tool, Configurable, ActionListener, ItemListener {
+public class NodeConveyorRotate extends NodeConveyor implements Tool, Configurable, ActionListener, ItemListener {
 
   //an image displaying the node
   private static Image img;
 
-  public NodeConveyorNormal() {
+  public NodeConveyorRotate() {
     //load the image if it is not already loaded
     if(img == null) {
       Toolkit tk = Toolkit.getDefaultToolkit();
-      img = tk.getImage(getClass().getResource("/png/NodeConveyorNormal.png"));
+      img = tk.getImage(getClass().getResource("/png/NodeConveyorRotate.png"));
     }
   }
 
-  public NodeConveyorNormal(int x, int y) {
+  public NodeConveyorRotate(int x, int y) {
     this();
     this.x = x;
     this.y = y;
@@ -52,7 +52,7 @@ public class NodeConveyorNormal extends NodeConveyor implements Tool, Configurab
   @Override
   public void writeToJSON(JSONObject json) {
     super.writeToJSON(json);
-    json.put("type","NodeConveyorNormal");
+    json.put("type","NodeConveyorRotate");
   }
 
   @Override
@@ -93,12 +93,12 @@ public class NodeConveyorNormal extends NodeConveyor implements Tool, Configurab
 
   @Override
   public Tool newInstance() {
-    return new NodeConveyorNormal();
+    return new NodeConveyorRotate();
   }
 
   @Override
   public void onClick(Main frame, PPLevel level, int x, int y) {
-    level.nodes.add(new NodeConveyorNormal(x,y));
+    level.nodes.add(new NodeConveyorRotate(x,y));
   }
 
 }

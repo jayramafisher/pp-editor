@@ -188,6 +188,12 @@ public class PPLevel {
     else if(node.getString("type").equals("NodeConveyorNormal")) {
       return new NodeConveyorNormal().readFromJSON(node);
     }
+    else if(node.getString("type").equals("NodeConveyorRotate")) {
+      return new NodeConveyorRotate().readFromJSON(node);
+    }
+    else if(node.getString("type").equals("NodeAirTable")) {
+      return new NodeAirTable().readFromJSON(node);
+    }
     else if(node.getString("type").equals("NodeGroupRect")) {
       return new NodeGroupRect().readFromJSON(node);
     }

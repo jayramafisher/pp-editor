@@ -39,7 +39,7 @@ public class MailNormal extends Mail implements Tool, Configurable, ActionListen
   public void paint(Graphics2D g) {
     g.drawImage(img,x*PP.SZ,y*PP.SZ,null);
     g.setColor(ColorUtils.intToColor(color));
-    g.fillRect(x*PP.SZ+5,y*PP.SZ+5,15,15);
+    g.fillRect(x*PP.SZ+25,y*PP.SZ+15,9,6);
   }
 
   @Override
