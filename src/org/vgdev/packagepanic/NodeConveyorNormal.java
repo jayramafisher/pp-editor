@@ -67,7 +67,9 @@ public class NodeConveyorNormal extends NodeConveyor implements Tool, Configurab
     JCheckBox check = new JCheckBox("Clickable",clickable);
     check.addItemListener(this);
     panel.add(check);
-    return panel;
+    JPanel dummy = new JPanel();
+    dummy.add(panel);
+    return dummy;
   }
 
   @Override

@@ -35,35 +35,29 @@ public class PPToolSelect extends JToolBar implements ActionListener, MouseListe
 
     tools = new TreeMap<String,Tool>();
 
-    cols = new JPanel[2];
-    cols[0] = new JPanel(new GridLayout(7,1));
-    cols[1] = new JPanel(new GridLayout(3,1));
-    this.add(cols[0]);
-    this.add(cols[1]);
-
     //create and add the buttons
-    this.addTool("ToolNodeSelect",         new ToolNodeSelect(),     0);
-    this.addTool("ToolNodeDelete",         new ToolNodeDelete(),     0);
-    this.addTool("ToolNodeConveyorNormal", new NodeConveyorNormal(), 0);
-    this.addTool("ToolNodeConveyorRotate", new NodeConveyorRotate(), 0);
-    this.addTool("ToolNodeAirTable",       new NodeAirTable(),       0);
-    this.addTool("ToolNodeGroupRect",      new NodeGroupRect(),      0);
-    this.addTool("ToolNodeBin",            new NodeBin(),            0);
-
-    this.addTool("ToolMailSelect",         new ToolMailSelect(),     1);
-    this.addTool("ToolMailDelete",         new ToolMailDelete(),     1);
-    this.addTool("ToolMailNormal",         new MailNormal(),         1);
+    this.addTool("ToolNodeSelect",         new ToolNodeSelect());
+    this.addTool("ToolNodeDelete",         new ToolNodeDelete());
+    this.addTool("ToolNodeGroupRect",      new NodeGroupRect());
+    this.addTool("ToolNodeGroupList",      new NodeGroupList());
+    this.addTool("ToolNodeConveyorNormal", new NodeConveyorNormal());
+    this.addTool("ToolNodeConveyorRotate", new NodeConveyorRotate());
+    this.addTool("ToolNodeAirTable",       new NodeAirTable());
+    this.addTool("ToolNodeBin",            new NodeBin());
+    this.addTool("ToolMailSelect",         new ToolMailSelect());
+    this.addTool("ToolMailDelete",         new ToolMailDelete());
+    this.addTool("ToolMailNormal",         new MailNormal());
 
     //slightly fancier GUI
     this.setRollover(true);
 
   }
 
-  private void addTool(String name, Tool tool, int column) {
+  private void addTool(String name, Tool tool) {
     JButton button = new JButton(tool.getIcon());
     button.setActionCommand(name);
     button.addActionListener(this);
-    cols[column].add(button);
+    this.add(button);
     tools.put(name,tool);
   }
 
@@ -79,7 +73,7 @@ public class PPToolSelect extends JToolBar implements ActionListener, MouseListe
 
   @Override
   public void mousePressed(MouseEvent event) {
-    if(currentTool != null) {
+    if(level.isReady() && currentTool != null) {
       currentTool.onClick(frame,level,event.getX()/PP.SZ,event.getY()/PP.SZ);
       frame.repaint();
     }

@@ -36,13 +36,13 @@ public class PPPanel extends JPanel {
   @Override
   public void paint(Graphics g) {
 
+    //if the level isn't ready, don't draw it
+    if(!level.isReady()) return;
+
     //draw the background, i.e. empty nodes
     for(int i = 0; i < PP.NX*PP.NY; ++i) {
       g.drawImage(imgBlank,(i%PP.NX)*PP.SZ,(i/PP.NX)*PP.SZ,null);
     }
-
-    //if the level isn't ready, don't draw it
-    if(!level.isReady()) return;
 
     //draw the nodes and mail
     for(Node node : level.nodes) node.paint((Graphics2D)g);

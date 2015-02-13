@@ -57,6 +57,7 @@ public class PPLevel {
 
     //the level is now ready for editing
     ready = true;
+    parent.repaint();
 
   }
 
@@ -109,9 +110,9 @@ public class PPLevel {
       }
     }
 
-    parent.repaint();
-
+    //the level is now ready for editing
     ready = true;
+    parent.repaint();
 
   }
 
@@ -196,6 +197,9 @@ public class PPLevel {
     }
     else if(node.getString("type").equals("NodeGroupRect")) {
       return new NodeGroupRect().readFromJSON(node);
+    }
+    else if(node.getString("type").equals("NodeGroupList")) {
+      return new NodeGroupList().readFromJSON(node);
     }
     else return null;
   }

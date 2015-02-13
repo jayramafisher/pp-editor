@@ -4,8 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
 import java.awt.Container;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.UIManager;
 
 public class Main extends JFrame {
 
@@ -22,16 +25,25 @@ public class Main extends JFrame {
     //call the JFrame ctor, setting the title
     super("Package Panic! Level Editor");
 
+    try {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+    } catch(Exception e) { System.out.println("[PP-EDITOR] [WARNING] Failed to create look-and-feel.");}
+
     //create a blank level - this is the only instantiation
     level = new PPLevel();
 
+    JPanel north = new JPanel();
+    north.setLayout(new BoxLayout(north,BoxLayout.Y_AXIS));
+
     //add the toolbar for new/load/save/save as operations
     toolbar = new PPToolBar(this,level);
-    this.getContentPane().add(toolbar,BorderLayout.NORTH);
+    north.add(toolbar);
 
     //add the toolbar for selecting tools
     toolselect = new PPToolSelect(this,level);
-    this.getContentPane().add(toolselect,BorderLayout.WEST);
+    north.add(toolselect);
+
+    this.getContentPane().add(north,BorderLayout.NORTH);
 
     //add the panel for displaying and interaction with the level
     panel = new PPPanel(this,level);
@@ -49,7 +61,7 @@ public class Main extends JFrame {
   public void repaint() {
     this.revalidate();
     this.pack();
-    super.repaint();
+    panel.repaint();
   }
 
   public static void main(String[] args) {

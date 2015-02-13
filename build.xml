@@ -13,7 +13,7 @@
  
   <target name="build">
     <mkdir dir="${class.dir}"/>
-    <javac srcdir="${source.dir}" destdir="${class.dir}"/>
+    <javac srcdir="${source.dir}" destdir="${class.dir}" includeantruntime="false"/>
     <mkdir dir="${jar.dir}"/>
     <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${class.dir}">
       <fileset dir="${include.dir}"/>

@@ -33,6 +33,7 @@ public class MailNormal extends Mail implements Tool, Configurable, ActionListen
     this();
     this.x = x;
     this.y = y;
+    color = 15;
   }
 
   @Override
@@ -67,7 +68,9 @@ public class MailNormal extends Mail implements Tool, Configurable, ActionListen
     box.setSelectedIndex(color);
     box.addActionListener(this);
     panel.add(box);
-    return panel;
+    JPanel dummy = new JPanel();
+    dummy.add(panel);
+    return dummy;
   }
 
   //ActionListener

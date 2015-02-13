@@ -1,44 +1,46 @@
 package org.vgdev.packagepanic;
 
 import java.awt.geom.AffineTransform;
+import java.awt.Point;
 import java.awt.image.AffineTransformOp;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class NodeGroupRect extends NodeGroup implements Tool, Configurable {
+public class NodeGroupList extends NodeGroup implements Tool, Configurable {
 
-  int x2, y2;
+  List<Point> list;
   Node proto;
 
-  public NodeGroupRect() {
+  public NodeGroupList() {
     //load the image if it is not already loaded
     if(img == null) {
       Toolkit tk = Toolkit.getDefaultToolkit();
-      img = tk.getImage(getClass().getResource("/png/NodeGroupRect.png"));
+      img = tk.getImage(getClass().getResource("/png/NodeGroupList.png"));
     }
+    list = new ArrayList<Point>();
   }
 
-  public NodeGroupRect(int x1, int y1, int x2, int y2, Node proto) {
+  public NodeGroupList(Node proto) {
     this();
-    this.x = x1;
-    this.y = y1;
-    this.x2 = x2;
-    this.y2 = y2;
+    this.x = proto.getX();
+    this.y = proto.getY();
     this.proto = proto;
+    list.add(new Point(proto.getX(),proto.getY()));
   }
 
   @Override
   public void paint(Graphics2D g) {
-    for(int i = x; i <= x2; ++i) {
-      for(int j = y; j <= y2; ++j) {
-        proto.setX(i);
-        proto.setY(j);
-        proto.paint(g);
-      }
+    for(Point point : list) {
+      proto.setX(point.x);
+      proto.setY(point.y);
+      proto.paint(g);
     }
   }
 
@@ -46,41 +48,48 @@ public class NodeGroupRect extends NodeGroup implements Tool, Configurable {
   public void writeToJSON(JSONObject json) {
     proto.writeToJSON(json);
     json.put("subtype",json.getString("type"));
-    json.put("type","NodeGroupRect");
+    json.put("type","NodeGroupList");
     json.remove("x");
     json.remove("y");
-    json.put("x1",x);
-    json.put("y1",y);
-    json.put("x2",x2);
-    json.put("y2",y2);
+    JSONArray jsonlist = new JSONArray();
+    for(Point point : list) {
+      JSONObject obj = new JSONObject();
+      obj.put("x",point.x);
+      obj.put("y",point.y);
+      jsonlist.put(obj);
+    }
+    json.put("list",jsonlist);
   }
 
   @Override
   public Node readFromJSON(JSONObject json) {
-    this.x = json.getInt("x1");
-    this.y = json.getInt("y1");
-    this.x2 = json.getInt("x2");
-    this.y2 = json.getInt("y2");
+    JSONArray jsonlist = json.getJSONArray("list");
+    for(int i = 0; i < jsonlist.length(); ++i) {
+      JSONObject obj = jsonlist.getJSONObject(i);
+      list.add(new Point(obj.getInt("x"), obj.getInt("y")));
+    }
     json.put("type",json.getString("subtype"));
     json.remove("subtype");
-    json.remove("x1");
-    json.remove("y1");
-    json.remove("x2");
-    json.remove("y2");
-    json.put("x",y);
-    json.put("y",x);
+    json.put("x",list.get(0).x);
+    json.put("y",list.get(0).y);
     proto = PPLevel.createNode(json);
     return this;
   }
 
   @Override
   public boolean containsTile(int x, int y) {
-    return this.x <= x && x <= this.x2 && this.y <= y && y <= this.y2;
+    return list.contains(new Point(x,y));
+  }
+
+  public void add(Point point) {
+    list.add(point);
   }
 
   //Tool methods
 
   Image img;
+
+  NodeGroupList ngl;
 
   @Override
   public ImageIcon getIcon() {
@@ -89,25 +98,23 @@ public class NodeGroupRect extends NodeGroup implements Tool, Configurable {
 
   @Override
   public Tool newInstance() {
-    return new NodeGroupRect();
+    return new NodeGroupList();
   }
 
   @Override
   public void onClick(Main frame, PPLevel level, int x, int y) {
     if(proto == null) {
       for(Node node : level.nodes) {
-        if(!(node instanceof NodeGroup) &&node.getX() == x && node.getY() == y) {
+        if(!(node instanceof NodeGroup) && node.getX() == x && node.getY() == y) {
           proto = node;
-          this.x = x;
-          this.y = y;
+          ngl = new NodeGroupList(proto);
+          level.nodes.add(ngl);
           return;
         }
       }
     }
     else {
-      level.nodes.remove(proto);
-      level.nodes.add(new NodeGroupRect(this.x,this.y,x,y,proto));
-      proto = null;
+      ngl.add(new Point(x,y));
     }
   }
 

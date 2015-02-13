@@ -68,7 +68,9 @@ public class NodeBin extends Node implements Tool, Configurable, ActionListener 
     box.setSelectedIndex(color);
     box.addActionListener(this);
     panel.add(box);
-    return panel;
+    JPanel dummy = new JPanel();
+    dummy.add(panel);
+    return dummy;
   }
 
   //ActionListener
