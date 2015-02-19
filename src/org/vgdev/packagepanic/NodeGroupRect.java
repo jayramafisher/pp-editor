@@ -24,10 +24,10 @@ public class NodeGroupRect extends NodeGroup implements Tool, Configurable {
 
   public NodeGroupRect(int x1, int y1, int x2, int y2, Node proto) {
     this();
-    this.x = x1;
-    this.y = y1;
-    this.x2 = x2;
-    this.y2 = y2;
+    this.x = Math.min(x1,x2);
+    this.y = Math.min(y1,y2);
+    this.x2 = Math.max(x1,x2);
+    this.y2 = Math.max(y1,y2);
     this.proto = proto;
   }
 

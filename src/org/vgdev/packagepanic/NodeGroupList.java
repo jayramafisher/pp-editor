@@ -107,6 +107,7 @@ public class NodeGroupList extends NodeGroup implements Tool, Configurable {
       for(Node node : level.nodes) {
         if(!(node instanceof NodeGroup) && node.getX() == x && node.getY() == y) {
           proto = node;
+          level.nodes.remove(node);
           ngl = new NodeGroupList(proto);
           level.nodes.add(ngl);
           return;
