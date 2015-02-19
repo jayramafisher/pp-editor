@@ -108,6 +108,9 @@ public class PPLevel {
       if(mailobj.getString("type").equals("MailNormal")) {
         mail.add(new MailNormal().readFromJSON(mailobj));
       }
+      else if(mailobj.getString("type").equals("MailMagnetic")) {
+        mail.add(new MailMagnetic().readFromJSON(mailobj));
+      }
     }
 
     //the level is now ready for editing
@@ -194,6 +197,12 @@ public class PPLevel {
     }
     else if(node.getString("type").equals("NodeAirTable")) {
       return new NodeAirTable().readFromJSON(node);
+    }
+    else if(node.getString("type").equals("NodeMagnet")) {
+      return new NodeMagnet().readFromJSON(node);
+    }
+    else if(node.getString("type").equals("NodeChute")) {
+      return new NodeChute().readFromJSON(node);
     }
     else if(node.getString("type").equals("NodeGroupRect")) {
       return new NodeGroupRect().readFromJSON(node);
