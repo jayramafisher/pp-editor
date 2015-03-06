@@ -221,7 +221,9 @@ public class PPLevel {
     }
     else if(node.getString("type").equals("NodeIncinerator")) {
       return new NodeIncinerator().readFromJSON(node);
-
+    }
+    else if(node.getString("type").equals("NodeHolder")) {
+      return new NodeHolder().readFromJSON(node);
     }
     else return null;
   }
