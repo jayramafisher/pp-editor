@@ -225,6 +225,9 @@ public class PPLevel {
     else if(node.getString("type").equals("NodeHolder")) {
       return new NodeHolder().readFromJSON(node);
     }
+    else if(node.getString("type").equals("NodeSlide")) {
+      return new NodeSlide().readFromJSON(node);
+    }
     else return null;
   }
 
