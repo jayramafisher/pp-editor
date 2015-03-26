@@ -49,6 +49,7 @@ public class PPLevel {
     meta.put("format-version",1);
     meta.put("name-internal",internalName);
     meta.put("name-external",externalName);
+    meta.put("times", new JSONArray(new int[]{0,0}));
 
     //initialize notes, nodes, and mail
     notes = new JSONArray();
@@ -229,6 +230,26 @@ public class PPLevel {
       return new NodeSlide().readFromJSON(node);
     }
     else return null;
+  }
+
+  public void setInternalName(JFrame parent) {
+    String internalName = JOptionPane.showInputDialog(parent,"Internal name:");
+    meta.put("name-internal",internalName);
+  }
+
+  public void setExternalName(JFrame parent) {
+    String externalName = JOptionPane.showInputDialog(parent,"External name:");
+    meta.put("name-external",externalName);
+  }
+
+  public void setTimes(JFrame parent) {
+    String time1 = JOptionPane.showInputDialog(parent,"Time to lose first star (in 33ms ticks):");
+    String time2 = JOptionPane.showInputDialog(parent,"Time to lose second star (in 33ms ticks):");
+    try {
+      meta.put("times",new JSONArray(new int[]{Integer.parseInt(time1),Integer.parseInt(time2)}));
+    } catch(Exception exc) {
+      JOptionPane.showMessageDialog(parent,"Error: failed to parse times.");
+    }
   }
 
 }

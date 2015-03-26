@@ -18,7 +18,7 @@ public class PPToolBar extends JToolBar implements ActionListener {
     this.level = level;
 
     //create and add the buttons
-    String[] buttonNames = new String[]{"New","Load","Save","Save As"};
+    String[] buttonNames = new String[]{"New","Load","Save","Save As","Set Internal Name","Set External Name","Set Times"};
     for(String buttonName: buttonNames) {
       JButton button = new JButton(buttonName);
       button.setActionCommand(buttonName);
@@ -38,6 +38,9 @@ public class PPToolBar extends JToolBar implements ActionListener {
     else if(e.getActionCommand().equals("Load")) level.load(frame);
     else if(e.getActionCommand().equals("Save")) level.save(frame);
     else if(e.getActionCommand().equals("Save As")) level.saveAs(frame);
+    else if(e.getActionCommand().equals("Set Internal Name")) level.setInternalName(frame);
+    else if(e.getActionCommand().equals("Set External Name")) level.setExternalName(frame);
+    else if(e.getActionCommand().equals("Set Times")) level.setTimes(frame);
     frame.repaint();
 
   }
